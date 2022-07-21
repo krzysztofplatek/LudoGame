@@ -7,13 +7,14 @@ public class LobbyInfoClient {
     String yellow;
     String blue;
     String inGame;
-    public LobbyInfoClient(String n,String r,String g,String y,String b,String inG){
-        this.name=n;
-        this.red=r;
-        this.green=g;
-        this.yellow=y;
-        this.blue=b;
-        this.inGame=inG;
+
+    public LobbyInfoClient(String n, String r, String g, String y, String b, String inG) {
+        this.name = n;
+        this.red = r;
+        this.green = g;
+        this.yellow = y;
+        this.blue = b;
+        this.inGame = inG;
     }
 
     public String getInGame() {

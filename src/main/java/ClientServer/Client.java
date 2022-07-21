@@ -19,10 +19,12 @@ public class Client {
     private BufferedReader input;
     ClientWindow cWindow;
     private List<LobbyInfoClient> info;
+
     public Client(String name, int port) {
         this.serverName = name;
         this.serverPort = port;
     }
+
     public static void main(String[] args) {
         try {
             Client c = new Client("localhost", 8831);
@@ -32,6 +34,7 @@ public class Client {
             e.printStackTrace();
         }
     }
+
     public void connect() throws IOException {
         this.socket = new Socket(serverName, serverPort);
 
@@ -49,6 +52,7 @@ public class Client {
         };
         watekOdczytujacy.start();
     }
+
     private void MessageListener() {
         String msg;
         while (true) {
@@ -71,10 +75,10 @@ public class Client {
                     }
                     if (msg.startsWith("LOBBYINFO")) {
                         String[] tokens = msg.split(";");
-                        info.add(new LobbyInfoClient(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5],tokens[6]));
+                        info.add(new LobbyInfoClient(tokens[1], tokens[2], tokens[3], tokens[4], tokens[5], tokens[6]));
                     }
                     if (msg.equals("ENDLOBBYINFO")) {  //otwiera okno ClientWindow
-                        cWindow=new ClientWindow(out,info, menuWindow.getNickname());
+                        cWindow = new ClientWindow(out, info, menuWindow.getNickname());
                         cWindow.setVisible(true);
                     }
 
@@ -153,7 +157,7 @@ public class Client {
                         if (nickname.equals(game.getRedPlayer().getNickName())) {
                             if (game.getGreenPlayer() != null) {
                                 game.getBoard().changeTurn();
-                                send("START;" + game.getGreenPlayer().getNickName()); //zmienic nazwy start turn next turn
+                                send("START;" + game.getGreenPlayer().getNickName());
                             } else {
                                 game.getBoard().changeTurn();
                                 send("START;" + game.getRedPlayer().getNickName());
@@ -162,7 +166,7 @@ public class Client {
                             if (nickname.equals(game.getGreenPlayer().getNickName())) {
                                 if (game.getYellowPlayer() != null) {
                                     game.getBoard().changeTurn();
-                                    send("START;" + game.getYellowPlayer().getNickName()); //zmienic nazwy start turn next turn
+                                    send("START;" + game.getYellowPlayer().getNickName());
                                 } else {
                                     game.getBoard().changeTurn();
                                     send("START;" + game.getRedPlayer().getNickName());
@@ -171,7 +175,7 @@ public class Client {
                                 if (nickname.equals(game.getYellowPlayer().getNickName())) {
                                     if (game.getBluePlayer() != null) {
                                         game.getBoard().changeTurn();
-                                        send("START;" + game.getBluePlayer().getNickName()); //zmienic nazwy start turn next turn
+                                        send("START;" + game.getBluePlayer().getNickName());
                                     } else {
                                         game.getBoard().changeTurn();
                                         send("START;" + game.getRedPlayer().getNickName());
@@ -190,12 +194,15 @@ public class Client {
             }
         }
     }
+
     private void send(String msg) {
         out.println(msg);
     }
+
     private void openCWindow() {
         send("LOBBYINFO");
     }
+
     private void startGame() {
         menuWindow = new MenuWindow(out);
         menuWindow.setVisible(true);
